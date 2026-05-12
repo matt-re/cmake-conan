@@ -5,7 +5,7 @@
 
 namespace rpn {
 
-std::optional<double> calc(std::string_view expr);
+[[nodiscard]] std::optional<double> calc(std::string_view expr);
 
-}
+}  // namespace rpn
 
