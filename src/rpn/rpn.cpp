@@ -1,30 +1,40 @@
 #include "rpn.h"
 
+#include <cctype>
 #include <charconv>
+#include <cstddef>
 #include <span>
-#include <sstream>
 #include <stack>
 #include <vector>
 
 namespace rpn {
 namespace {
 
-std::vector<std::string> tokenize(std::string_view expr)
+std::vector<std::string_view> tokenize(std::string_view expr)
 {
-	std::istringstream iss{std::string(expr)};
-	std::vector<std::string> tokens;
-	std::string token;
-	while (iss >> token) {
-		tokens.push_back(token);
+	std::vector<std::string_view> tokens;
+	std::size_t i = 0;
+	while (i < expr.size()) {
+		while (i < expr.size() && std::isspace(static_cast<unsigned char>(expr[i]))) {
+			i++;
+		}
+		if (i >= expr.size()) {
+			break;
+		}
+		const std::size_t start = i;
+		while (i < expr.size() && !std::isspace(static_cast<unsigned char>(expr[i]))) {
+			i++;
+		}
+		tokens.emplace_back(expr.data() + start, i - start);
 	}
 	return tokens;
 }
 
-std::optional<double> evaluate(std::span<const std::string> tokens)
+std::optional<double> evaluate(std::span<const std::string_view> tokens)
 {
 	std::stack<double> stack;
 
-	for (const std::string& token : tokens) {
+	for (std::string_view token : tokens) {
 		if (token == "+" || token == "-" || token == "*" || token == "/") {
 			if (stack.size() < 2) {
 				return std::nullopt;
