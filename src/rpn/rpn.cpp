@@ -22,10 +22,6 @@ std::vector<std::string> tokenize(std::string_view expr)
 
 std::optional<double> evaluate(std::span<const std::string> tokens)
 {
-	if (tokens.empty()) {
-		return std::optional{ 0.0 };
-	}
-	
 	std::stack<double> stack;
 
 	for (const std::string& token : tokens) {
