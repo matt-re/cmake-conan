@@ -1,10 +1,10 @@
+#include "rpn.h"
+
 #include <charconv>
 #include <span>
 #include <sstream>
 #include <stack>
 #include <vector>
-
-#include "rpn.h"
 
 namespace rpn {
 namespace {
@@ -67,15 +67,15 @@ std::optional<double> evaluate(std::span<const std::string> tokens)
 		return std::nullopt;
 	}
 
-	return std::optional{ stack.top() };
+	return stack.top();
 }
 
-}
+}  // namespace
 
 std::optional<double> calc(std::string_view expr)
 {
 	return evaluate(tokenize(expr));
 }
 
-}
+}  // namespace rpn
 
