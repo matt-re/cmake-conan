@@ -58,8 +58,9 @@ std::optional<double> evaluate(std::span<const std::string> tokens)
 			}
 		} else {
 			double value;
-			auto result = std::from_chars(token.data(), token.data() + token.size(), value);
-			if (result.ec != std::errc()) {
+			const char* end = token.data() + token.size();
+			auto [ptr, ec] = std::from_chars(token.data(), end, value);
+			if (ec != std::errc() || ptr != end) {
 				return std::nullopt;
 			}
 			stack.push(value);
