@@ -1,8 +1,11 @@
 #pragma once
 
 #include <optional>
-#include <span>
-#include <string>
+#include <string_view>
 
-std::optional<double> rpn_calc(std::string_view expr);
+namespace rpn {
+
+std::optional<double> calc(std::string_view expr);
+
+}
 

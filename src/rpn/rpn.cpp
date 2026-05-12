@@ -1,10 +1,13 @@
 #include <charconv>
-#include <iterator>
+#include <span>
 #include <sstream>
 #include <stack>
 #include <vector>
 
 #include "rpn.h"
+
+namespace rpn {
+namespace {
 
 std::vector<std::string> tokenize(std::string_view expr)
 {
@@ -17,7 +20,7 @@ std::vector<std::string> tokenize(std::string_view expr)
 	return tokens;
 }
 
-std::optional<double> calc(std::span<const std::string> tokens)
+std::optional<double> evaluate(std::span<const std::string> tokens)
 {
 	if (tokens.empty()) {
 		return std::optional{ 0.0 };
@@ -70,10 +73,12 @@ std::optional<double> calc(std::span<const std::string> tokens)
 	return std::optional{ stack.top() };
 }
 
-std::optional<double> rpn_calc(std::string_view expr)
+}
+
+std::optional<double> calc(std::string_view expr)
 {
-	std::vector<std::string> tokens = tokenize(expr);
-	std::optional<double> result = calc(tokens);
-	return result;
+	return evaluate(tokenize(expr));
+}
+
 }
 
