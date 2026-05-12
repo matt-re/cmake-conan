@@ -3,4 +3,5 @@
 !.gitignore
 !*.cpp
 !*.h
-!*.sh
+!CMakeLists.txt
+/build/

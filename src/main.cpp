@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "rpn.h"
+#include "rpn/rpn.h"
 
 int main(int argc, char **argv)
 {
