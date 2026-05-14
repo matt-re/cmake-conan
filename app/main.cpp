@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 		expr = "2 3 + 10 *";
 	}
 
-	std::optional<double> result = rpn::calc(expr);
+	std::optional<std::string> result = rpn::calc(expr);
 	if (result) {
 		std::cout << *result << "\n";
 		return 0;
