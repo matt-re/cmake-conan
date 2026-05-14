@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 			expr += arg;
 		}
 	} else {
-		expr = "2 3 + 10 *";
+		expr = "99999999999999999999 99999999999999999999 *";
 	}
 
 	std::optional<std::string> result = rpn::calc(expr);

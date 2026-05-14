@@ -72,7 +72,7 @@ std::optional<mpf_class> evaluate(std::span<const std::string_view> tokens)
 				break;
 			}
 		} else {
-			mpf_class value(kPrecision);
+			mpf_class value(0.0, kPrecision);
 			if (value.set_str(std::string(token), 10) != 0) {
 				return std::nullopt;
 			}
