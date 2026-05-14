@@ -1,16 +1,19 @@
-#include <iostream>
-#include <string>
 #include "rpn/rpn.h"
+
+#include <iostream>
+#include <optional>
+#include <span>
+#include <string>
 
 int main(int argc, char **argv)
 {
 	std::string expr;
 	if (argc > 1) {
-		for (int i = 1; i < argc; i++) {
-			if (i > 1) {
+		for (const char *arg : std::span(argv + 1, static_cast<size_t>(argc) - 1)) {
+			if (!expr.empty()) {
 				expr += ' ';
 			}
-			expr += argv[i];
+			expr += arg;
 		}
 	} else {
 		expr = "2 3 + 10 *";

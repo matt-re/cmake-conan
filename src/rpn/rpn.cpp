@@ -1,32 +1,37 @@
 #include "rpn/rpn.h"
 
-#include <cctype>
 #include <cstddef>
 #include <gmpxx.h>
 #include <iomanip>
+#include <locale>
 #include <span>
 #include <sstream>
 #include <stack>
 #include <vector>
 
 namespace rpn {
+
+constexpr unsigned int kDefaultOutputDigits = 77;
+
 namespace {
 
 constexpr mp_bitcnt_t kPrecision = 256;
 
 std::vector<std::string_view> tokenize(std::string_view expr)
 {
+	const std::locale& loc = std::locale::classic();
+
 	std::vector<std::string_view> tokens;
 	std::size_t i = 0;
 	while (i < expr.size()) {
-		while (i < expr.size() && std::isspace(static_cast<unsigned char>(expr[i]))) {
+		while (i < expr.size() && std::isspace(expr[i], loc)) {
 			i++;
 		}
 		if (i >= expr.size()) {
 			break;
 		}
 		const std::size_t start = i;
-		while (i < expr.size() && !std::isspace(static_cast<unsigned char>(expr[i]))) {
+		while (i < expr.size() && !std::isspace(expr[i], loc)) {
 			i++;
 		}
 		tokens.emplace_back(expr.data() + start, i - start);
@@ -44,8 +49,6 @@ std::optional<mpf_class> evaluate(std::span<const std::string_view> tokens)
 				return std::nullopt;
 			}
 
-			mpf_class result(kPrecision);
-
 			mpf_class b = stack.top();
 			stack.pop();
 			mpf_class a = stack.top();
@@ -53,23 +56,19 @@ std::optional<mpf_class> evaluate(std::span<const std::string_view> tokens)
 
 			switch (token[0]) {
 			case '+':
-				result = a + b;
-				stack.push(std::move(result));
+				stack.push(a + b);
 				break;
 			case '-':
-				result = a - b;
-				stack.push(std::move(result));
+				stack.push(a - b);
 				break;
 			case '*':
-				result = a * b;
-				stack.push(std::move(result));
+				stack.push(a * b);
 				break;
 			case '/':
 				if (b == 0) {
 					return std::nullopt;
 				}
-				result = a / b;
-				stack.push(std::move(result));
+				stack.push(a / b);
 				break;
 			}
 		} else {
@@ -90,14 +89,14 @@ std::optional<mpf_class> evaluate(std::span<const std::string_view> tokens)
 
 }  // namespace
 
-std::optional<std::string> calc(std::string_view expr, int output_digits)
+std::optional<std::string> calc(std::string_view expr, std::optional<unsigned int> output_digits)
 {
 	std::optional<mpf_class> result = evaluate(tokenize(expr));
 	if (!result) {
 		return std::nullopt;
 	}
 	std::ostringstream os;
-	os << std::setprecision(output_digits) << *result;
+	os << std::setprecision(output_digits.value_or(kDefaultOutputDigits)) << *result;
 	return os.str();
 }
 
