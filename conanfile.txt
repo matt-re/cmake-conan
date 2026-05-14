@@ -1,0 +1,12 @@
+[requires]
+gmp/6.3.0
+
+[options]
+gmp/*:enable_cxx=True
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout

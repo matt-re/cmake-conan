@@ -1,0 +1,31 @@
+Third-Party Software Notices
+============================
+
+This project (rpn) is distributed under the MIT License (see LICENSE).
+Distributed binaries may include or link against the third-party
+components listed below; their license terms apply in addition to the
+MIT License covering this project's own source.
+
+--------------------------------------------------------------------
+GNU Multiple Precision Arithmetic Library (GMP)
+--------------------------------------------------------------------
+
+Component:   gmp
+Version:     6.3.0
+Upstream:    https://gmplib.org/
+License:     LGPL-3.0-or-later OR GPL-2.0-or-later (dual-licensed).
+             This project distributes GMP under the LGPL-3.0-or-later
+             option.
+License files (verbatim, shipped with this project):
+             licenses/gmp/COPYING.LESSERv3   (LGPL v3 text)
+             licenses/gmp/COPYINGv2          (GPL v2 text, included
+                                              because GMP is dual-licensed)
+
+Linking:     This project currently links GMP statically. Per LGPL § 4,
+             redistribution of a statically linked binary must give
+             recipients the means to relink against a modified GMP
+             (for example, by providing the project's object files or
+             a corresponding build that links GMP dynamically). If you
+             plan to redistribute binaries, prefer the shared-library
+             build (`gmp/*:shared=True` in conanfile.txt) or arrange
+             to ship relinkable artifacts.
