@@ -1,5 +1,5 @@
 # App to test CMake and Conan
-A simple C++ application to test CMake and Conan for personal development.
+A simple C++ calculator to test CMake and Conan for personal development.
 
 Depends on [GMP](https://gmplib.org/), pulled in via Conan. See
 [`THIRD-PARTY-NOTICES`](THIRD-PARTY-NOTICES) for license and attribution.
