@@ -24,9 +24,39 @@ static void test_large_roundtrip() {
 	assert(result == "1000000000000000000");
 }
 
+static void test_invalid_token() {
+	std::optional<std::string> result = rpn::calc("foo 1 +");
+	assert(!result);
+}
+
+static void test_division_by_zero() {
+	std::optional<std::string> result = rpn::calc("5 0 /");
+	assert(!result);
+}
+
+static void test_too_few_operands() {
+	std::optional<std::string> result = rpn::calc("1 +");
+	assert(!result);
+}
+
+static void test_extra_values() {
+	std::optional<std::string> result = rpn::calc("1 2");
+	assert(!result);
+}
+
+static void test_empty() {
+	std::optional<std::string> result = rpn::calc("");
+	assert(!result);
+}
+
 int main() {
 	test_large_mul();
 	test_large_add();
 	test_precision_div();
 	test_large_roundtrip();
+	test_invalid_token();
+	test_division_by_zero();
+	test_too_few_operands();
+	test_extra_values();
+	test_empty();
 }
