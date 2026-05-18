@@ -49,9 +49,9 @@ std::optional<mpf_class> evaluate(std::span<const std::string_view> tokens)
 				return std::nullopt;
 			}
 
-			mpf_class b = stack.top();
+			mpf_class b = std::move(stack.top());
 			stack.pop();
-			mpf_class a = stack.top();
+			mpf_class a = std::move(stack.top());
 			stack.pop();
 
 			switch (token[0]) {
