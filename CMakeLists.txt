@@ -8,5 +8,6 @@ add_library(rpn_warnings INTERFACE)
 target_compile_features(rpn_warnings INTERFACE cxx_std_20)
 target_compile_options(rpn_warnings INTERFACE -Wall -Wextra -Wpedantic)
 
+enable_testing()
 add_subdirectory(lib/rpn)
 add_subdirectory(app)
