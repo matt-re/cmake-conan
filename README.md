@@ -24,3 +24,15 @@ cmake --preset conan-release
 cmake --build --preset conan-release
 ./build/Release/rpn
 ```
+
+## Test
+
+### Debug
+```
+ctest --test-dir build/Debug
+```
+
+### Release
+```
+ctest --test-dir build/Release
+```
